@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Why We Never Blame the Moon for a Bad Photo — a note on flaws, light, and appreciating things as they are.">
+  <meta name="theme-color" content="#101018">
+  <title>Why We Never Blame the Moon for a Bad Photo | Lux</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =================================
+       LUX'S BLOG — SAME THEME AS PORTFOLIO
+       Dark purple, pink and blue
+    ================================= */
+
+    :root {
+      --bg: #101018;
+      --panel: #171720;
+      --text: #f5f3fb;
+      --muted: #a6a3b6;
+      --subtle: #777487;
+      --line: rgba(255, 255, 255, 0.11);
+      --purple: #b69cff;
+      --pink: #ff9ecb;
+      --blue: #93d6ff;
+      --green: #a8e7c0;
+
+      --mono: 'DM Mono', monospace;
+      --display: 'Space Grotesk', sans-serif;
+      --body: 'Manrope', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    ::selection {
+      color: #101018;
+      background: var(--purple);
+    }
+
+    /* BACKGROUND EFFECTS */
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      opacity: 0.18;
+      background-image: radial-gradient(
+        rgba(255, 255, 255, 0.25) 0.6px,
+        transparent 0.6px
+      );
+      background-size: 7px 7px;
+    }
+
+    .page-glow {
+      position: absolute;
+      z-index: -1;
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      filter: blur(110px);
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    .glow-one {
+      top: 80px;
+      left: -180px;
+      background: #8b5cf6;
+    }
+
+    .glow-two {
+      top: 700px;
+      right: -240px;
+      background: #f472b6;
+    }
+
+    /* NAVIGATION */
+
+    .site-header {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 16px 7%;
+      border-bottom: 1px solid var(--line);
+      background: rgba(16, 16, 24, 0.83);
+      backdrop-filter: blur(18px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font: 700 1.4rem var(--display);
+      letter-spacing: -0.06em;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: 1px solid rgba(182, 156, 255, 0.6);
+      border-radius: 11px;
+      color: var(--purple);
+      font-size: 1rem;
+      transform: rotate(-7deg);
+    }
+
+    .accent {
+      color: var(--purple);
+    }
+
+    .main-nav {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .main-nav a,
+    .header-cta {
+      font-size: 0.78rem;
+      text-decoration: none;
+      color: var(--muted);
+      transition: color 0.25s;
+    }
+
+    .main-nav a:hover,
+    .header-cta:hover {
+      color: var(--purple);
+    }
+
+    .main-nav a.active {
+      color: var(--purple);
+    }
+
+    .header-cta {
+      padding: 10px 15px;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      color: var(--text);
+    }
+
+    .header-cta span {
+      color: var(--purple);
+      margin-left: 5px;
+    }
+
+    /* LAYOUT */
+
+    .section-wrap {
+      width: min(1120px, 86%);
+      margin-inline: auto;
+    }
+
+    .mono {
+      font-family: var(--mono);
+      letter-spacing: 0.12em;
+    }
+
+    /* BLOG HERO */
+
+    .blog-hero {
+      padding-top: 90px;
+      padding-bottom: 55px;
+      position: relative;
+    }
+
+    .section-kicker {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--subtle);
+      margin-bottom: 35px;
+      font: 0.65rem var(--mono);
+      letter-spacing: 0.12em;
+    }
+
+    .section-kicker > span:first-child {
+      color: var(--purple);
+    }
+
+    .kicker-line {
+      height: 1px;
+      width: 45px;
+      background: rgba(182, 156, 255, 0.55);
+    }
+
+    .blog-hero h1 {
+      max-width: 900px;
+      font: 600 clamp(2.6rem, 6vw, 5rem)/1.05 var(--display);
+      letter-spacing: -0.06em;
+    }
+
+    .gradient-text {
+      color: transparent;
+      background: linear-gradient(100deg, var(--purple), var(--pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .serif-italic {
+      color: var(--pink);
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      letter-spacing: -0.07em;
+    }
+
+    .blog-intro {
+      max-width: 620px;
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    /* META ROW */
+
+    .post-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      margin-top: 30px;
+      color: var(--subtle);
+      font: 0.62rem var(--mono);
+      letter-spacing: 0.1em;
+    }
+
+    .post-meta .dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--purple);
+    }
+
+    .post-meta .tag {
+      padding: 5px 9px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: #c7c1d5;
+      letter-spacing: 0.08em;
+    }
+
+    /* ARTICLE */
+
+    .article-wrap {
+      padding-bottom: 110px;
+    }
+
+    .article-divider {
+      height: 1px;
+      background: var(--line);
+      margin-bottom: 55px;
+    }
+
+    .post {
+      width: min(760px, 100%);
+      margin-inline: auto;
+      color: #cfcbdd;
+      font-size: 1.02rem;
+      line-height: 1.95;
+    }
+
+    .post > p + p {
+      margin-top: 22px;
+    }
+
+    .post h2 {
+      margin-top: 55px;
+      margin-bottom: 18px;
+      color: var(--text);
+      font: 600 clamp(1.5rem, 3vw, 1.9rem)/1.2 var(--display);
+      letter-spacing: -0.04em;
+    }
+
+    .post h3 {
+      margin-top: 40px;
+      margin-bottom: 12px;
+      color: var(--text);
+      font: 600 1.2rem var(--display);
+      letter-spacing: -0.03em;
+    }
+
+    .post strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .post em {
+      color: #e8ddff;
+    }
+
+    .post a {
+      color: var(--purple);
+      text-decoration: underline;
+      text-decoration-color: rgba(182, 156, 255, 0.4);
+      text-underline-offset: 3px;
+      transition: color 0.25s, text-decoration-color 0.25s;
+    }
+
+    .post a:hover {
+      color: var(--pink);
+      text-decoration-color: var(--pink);
+    }
+
+    .post ul,
+    .post ol {
+      margin: 20px 0 0;
+      padding-left: 22px;
+    }
+
+    .post li + li {
+      margin-top: 9px;
+    }
+
+    .post li::marker {
+      color: var(--purple);
+    }
+
+    .post blockquote {
+      position: relative;
+      margin: 40px 0;
+      padding: 6px 0 6px 28px;
+      border-left: 2px solid rgba(182, 156, 255, 0.55);
+      color: #e6e0f5;
+      font: 500 1.15rem/1.7 var(--display);
+      letter-spacing: -0.02em;
+    }
+
+    .post blockquote::before {
+      content: "“";
+      position: absolute;
+      left: 18px;
+      top: -26px;
+      color: var(--pink);
+      font: 3.4rem/1 Georgia, serif;
+      opacity: 0.7;
+    }
+
+    .post img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 38px 0;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+    }
+
+    .post figure {
+      margin: 38px 0;
+    }
+
+    .post figure img {
+      margin: 0;
+    }
+
+    .post figcaption {
+      margin-top: 10px;
+      color: var(--subtle);
+      font: 0.6rem var(--mono);
+      letter-spacing: 0.08em;
+      text-align: center;
+    }
+
+    .post code {
+      padding: 2px 6px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: rgba(182, 156, 255, 0.08);
+      color: #d8c9ff;
+      font: 0.82rem var(--mono);
+    }
+
+    .post pre {
+      margin: 32px 0;
+      padding: 20px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #14131c;
+      line-height: 1.7;
+    }
+
+    .post pre code {
+      padding: 0;
+      border: 0;
+      background: none;
+      color: #cfcbdd;
+      font-size: 0.8rem;
+    }
+
+    .post hr {
+      margin: 48px 0;
+      border: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    /* POST FOOTER */
+
+    .post-footer {
+      width: min(760px, 100%);
+      margin: 60px auto 0;
+      padding-top: 30px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .post-tags span {
+      padding: 5px 9px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: #c7c1d5;
+      font: 0.58rem var(--mono);
+      letter-spacing: 0.08em;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--muted);
+      font: 0.62rem var(--mono);
+      letter-spacing: 0.1em;
+      transition: color 0.25s;
+    }
+
+    .back-link:hover {
+      color: var(--purple);
+    }
+
+    .back-link span {
+      color: var(--purple);
+    }
+
+    /* CTA STRIP */
+
+    .blog-cta {
+      padding: 70px 7%;
+      text-align: center;
+      border-block: 1px solid var(--line);
+      background: linear-gradient(120deg, #20192b, #191722 55%, #211725);
+    }
+
+    .blog-cta .quote-symbol {
+      color: var(--pink);
+      font: 3.6rem/0.8 Georgia, serif;
+    }
+
+    .blog-cta blockquote {
+      margin-top: 14px;
+      font: 600 clamp(1.3rem, 3vw, 2.1rem)/1.3 var(--display);
+      letter-spacing: -0.04em;
+    }
+
+    .blog-cta blockquote span {
+      color: var(--purple);
+    }
+
+    .blog-cta .mono {
+      display: block;
+      margin-top: 18px;
+      color: var(--subtle);
+      font-size: 0.56rem;
+    }
+
+    /* FOOTER */
+
+    .site-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 24px 7%;
+      color: var(--subtle);
+      font-size: 0.65rem;
+    }
+
+    .footer-brand {
+      color: var(--text);
+      font-size: 1.15rem;
+    }
+
+    .footer-brand .brand-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 9px;
+      font-size: 0.85rem;
+    }
+
+    .footer-year {
+      font: 0.56rem var(--mono);
+      letter-spacing: 0.12em;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 700px) {
+      .site-header {
+        padding: 14px 5%;
+        min-height: 70px;
+      }
+
+      .main-nav {
+        display: none;
+      }
+
+      .header-cta {
+        font-size: 0.7rem;
+      }
+
+      .section-wrap {
+        width: 90%;
+      }
+
+      .blog-hero {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+
+      .blog-hero h1 {
+        font-size: clamp(2rem, 9vw, 3.1rem);
+        letter-spacing: -0.05em;
+      }
+
+      .post {
+        font-size: 0.96rem;
+      }
+
+      .article-wrap {
+        padding-bottom: 75px;
+      }
+
+      .article-divider {
+        margin-bottom: 40px;
+      }
+
+      .blog-cta {
+        padding: 60px 6%;
+      }
+
+      .site-footer {
+        flex-wrap: wrap;
+        padding: 22px 5%;
+      }
+
+      .site-footer p {
+        order: 3;
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-glow glow-one" aria-hidden="true"></div>
+  <div class="page-glow glow-two" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <span class="brand">
+      <span class="brand-mark">L</span>
+      <span>lux<span class="accent">.</span></span>
+    </span>
+
+    <a class="header-cta" href="index(1).html">Back to home <span>↗</span></a>
+  </header>
+
+  <main>
+    <!-- BLOG HERO -->
+    <section class="blog-hero section-wrap">
+      <div class="section-kicker">
+        <span>BLOG / 01</span>
+        <span class="kicker-line"></span>
+        <span>NOTES FROM MY HEAD</span>
+      </div>
+
+      <h1>
+        Why We Never Blame<br>
+        the <span class="gradient-text">Moon</span> for a<br>
+        <span class="serif-italic">Bad Photo.</span>
+      </h1>
+
+      <p class="blog-intro">
+        We blame the camera, the lens, the sensor — never the moon. A small
+        observation about flaws, light, and the people we love.
+      </p>
+
+      <div class="post-meta">
+        <span>BY LUX</span>
+        <span class="dot"></span>
+        <span>NOVEMBER 12, 2026</span>
+        <span class="dot"></span>
+        <span>2 MIN READ</span>
+        <span class="tag">PERSPECTIVE</span>
+      </div>
+    </section>
+
+    <!-- ARTICLE -->
+    <section class="article-wrap section-wrap">
+      <div class="article-divider"></div>
+
+      <article class="post">
+        <p>
+          We&rsquo;ve all been there. You step outside, look up, and see a massive,
+          glowing full moon. It looks incredible. You pull out your phone, point
+          it at the sky, and take a picture. You open your gallery, and all you
+          see is a tiny, blurry white dot.
+        </p>
+
+        <p>
+          When this happens, what is our immediate reaction? We get frustrated and
+          say, &ldquo;My phone&rsquo;s camera quality is terrible.&rdquo; We blame the
+          lens, the lack of optical zoom, or the sensor. But we never, ever say,
+          &ldquo;The moon just isn&rsquo;t looking good tonight.&rdquo;
+        </p>
+
+        <p>
+          If you actually look closely at the moon, it isn&rsquo;t a perfectly
+          smooth, shiny orb. It&rsquo;s completely uneven, covered in deep craters,
+          dark spots, and scars. It is full of physical imperfections. Yet,
+          it&rsquo;s what gives us light in the dark, and we never hold those flaws
+          against it.
+        </p>
+
+        <blockquote>
+          Instead, we just admire it. We look past the rough surface and
+          appreciate it completely.
+        </blockquote>
+
+        <p>
+          It&rsquo;s a simple observation, but it says a lot. We love the moon not
+          because it&rsquo;s flawless, but just because it&rsquo;s the moon. We
+          don&rsquo;t need things&mdash;or people&mdash;to be picture-perfect to
+          appreciate them for exactly what they are.
+        </p>
+      </article>
+
+      <div class="post-footer">
+        <div class="post-tags">
+          <span>Perspective</span>
+          <span>Thoughts</span>
+          <span>Moon</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA STRIP -->
+    <section class="blog-cta">
+      <div class="quote-symbol">“</div>
+      <blockquote>
+        Stay curious.<br>
+        <span>Keep creating.</span>
+      </blockquote>
+      <span class="mono">A LITTLE REMINDER FROM ME, TO ME.</span>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span class="brand footer-brand">
+      <span class="brand-mark">L</span>
+      <span>lux<span class="accent">.</span></span>
+    </span>
+
+    <p>Designed with curiosity. Built with HTML &amp; CSS.</p>
+    <span class="footer-year">© 2026 · KEEP CREATING ✳</span>
+  </footer>
+</body>
+</html>
